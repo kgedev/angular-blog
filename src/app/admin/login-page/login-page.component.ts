@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {User} from '../../shared/interfaces';
 
 @Component({
   selector: 'app-login-page',
@@ -8,9 +9,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class LoginPageComponent implements OnInit {
 
-  form: FormGroup
+  form: FormGroup;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -26,14 +28,18 @@ export class LoginPageComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.form)
+    if (this.form.invalid) {
+      return;
+    }
 
-    if(this.form.invalid) {
-      return
+    const user: User = {
+      email: this.form.value.email,
+      password: this.form.value.password
     }
   }
 
   isInvalid(fieldName: string): boolean {
     return this.form.get(fieldName).touched && this.form.get(fieldName).invalid
   }
+
 }
