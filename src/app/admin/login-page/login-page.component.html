@@ -1,20 +1,32 @@
-<form class="card">
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
   <h2>Enter to administrator panel</h2>
-  <div class="form-control">
+  <div [ngClass]="{invalid: isInvalid('email')}"
+    class="form-control">
     <label for="email">Email:</label>
     <input id="email" type="email">
-    <div class="validation">
-      <small>error</small>
+
+    <div
+      *ngIf="isInvalid('email')"
+      class="validation"
+    >
+      <small *ngIf="form.get('email').errors.required">feel email field</small>
+      <small *ngIf="form.get('email').errors.email">incorrect email format</small>
     </div>
   </div>
 
-  <div class="form-control">
+  <div [ngClass]="{invalid: isInvalid('password')}"
+    class="form-control">
     <label for="email">Password:</label>
     <input id="password" type="password">
-    <div class="validation">
+    <div *ngIf="isInvalid('password')"
+      class="validation">
       <small>error</small>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Sign in</button>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="form.invalid"
+  >Sign in</button>
 </form>
