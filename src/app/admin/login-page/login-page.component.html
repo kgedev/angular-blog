@@ -1,32 +1,30 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()">
   <h2>Enter to administrator panel</h2>
-  <div [ngClass]="{invalid: isInvalid('email')}"
-    class="form-control">
+  <div [ngClass]="{invalid: isInvalid('email')}" class="form-control">
     <label for="email">Email:</label>
-    <input id="email" type="email">
+    <input id="email" type="email" formControlName="email">
 
-    <div
-      *ngIf="isInvalid('email')"
-      class="validation"
-    >
+    <div *ngIf="isInvalid('email')" class="validation">
       <small *ngIf="form.get('email').errors.required">feel email field</small>
       <small *ngIf="form.get('email').errors.email">incorrect email format</small>
     </div>
+
   </div>
 
-  <div [ngClass]="{invalid: isInvalid('password')}"
-    class="form-control">
+  <div [ngClass]="{invalid: isInvalid('password')}" class="form-control">
+
     <label for="email">Password:</label>
-    <input id="password" type="password">
-    <div *ngIf="isInvalid('password')"
-      class="validation">
-      <small>error</small>
+    <input id="password" type="password" formControlName="password">
+
+    <div *ngIf="isInvalid('password')" class="validation">
+      <small *ngIf="form.get('password').errors.required">feel password field</small>
+      <small *ngIf="form.get('password').errors.minlength">
+        Password shouldn't be less than {{form.get('password').errors.minlength.requiredLength}}.
+        Now it's {{form.get('password').errors.minlength.actualLength}}
+      </small>
     </div>
+
   </div>
 
-  <button
-    type="submit"
-    class="btn btn-primary"
-    [disabled]="form.invalid"
-  >Sign in</button>
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Sign in</button>
 </form>
