@@ -1,1 +1,29 @@
-<p>create-page works!</p>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h1>New post creation</h1>
+
+  <div [ngClass]="{invalid: isInvalid('title')}" class="form-control">
+    <label for="title">Post name</label>
+    <input id="title" type="text" formControlName="title">
+
+    <div *ngIf="isInvalid('title')" class="validation">
+      <small *ngIf="form.get('title').errors.required">Input post title</small>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label>Post content:</label>
+  </div>
+
+  <div [ngClass]="{invalid: isInvalid('author')}" class="form-control">
+    <label for="author">Post author</label>
+    <input id="author" type="text" formControlName="author">
+
+    <div *ngIf="isInvalid('author')" class="validation">
+      <small *ngIf="form.get('author').errors.required">Input author field</small>
+    </div>
+  </div>
+
+  <button class="btn btn-block, btn-dark" type="submit" [disabled]="form.invalid">
+    Create post
+  </button>
+</form>
