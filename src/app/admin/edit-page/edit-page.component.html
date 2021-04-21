@@ -1,1 +1,23 @@
-<p>edit-page works!</p>
+<div *ngIf="form; else loading">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div [ngClass]="{invalid: isInvalid('title')}" class="form-control">
+      <label for="title">Post name</label>
+      <input id="title" type="text" formControlName="title">
+
+      <div *ngIf="isInvalid('title')" class="validation">
+        <small *ngIf="form.get('title').errors.required">Input post title</small>
+      </div>
+    </div>
+
+    <div class="form-control">
+      <quill-editor formControlName="text"></quill-editor>
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Update</button>
+  </form>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>
