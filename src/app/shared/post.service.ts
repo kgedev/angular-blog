@@ -7,7 +7,8 @@ import {map} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class PostService {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {
+  }
 
   create(post: Post): Observable<Post> {
     return this.http.post(`${environment.fbDbUrl}/posts.json`, post)
@@ -16,20 +17,25 @@ export class PostService {
           ...post,
           id: response.name,
           date: new Date(post.date)
-        }
-      }))
+        };
+      }));
   }
 
   getAll(): Observable<Post[]> {
     return this.http.get(`${environment.fbDbUrl}/posts.json`)
-      .pipe(map((response: {[key: string]: any}) => {
-        return Object
-          .keys(response)
-          .map( key => ({
-            ...response[key],
-            id: key,
-            date: new Date(response[key].date)
-          }))
-      }))
+      .pipe(map((response: { [key: string]: any }) => {
+          return Object
+            .keys(response)
+            .map(key => ({
+              ...response[key],
+              id: key,
+              date: new Date(response[key].date)
+            }));
+        })
+      );
+  }
+
+  remove(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`)
   }
 }
