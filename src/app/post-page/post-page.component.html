@@ -1,18 +1,24 @@
-<div class="post">
-  <div class="header">
-    <h1>Post title</h1>
-    <button routerLink="/" class="btn btn-link">To main page</button>
-  </div>
+<div *ngIf="post$ | async as post; else loading">
+  <div class="post">
+    <div class="header">
+      <h1>{{post.title}}</h1>
+      <button routerLink="/" class="btn btn-link">To main page</button>
+    </div>
 
-  <div class="info">
-    <strong>Author</strong>
-    <small>12.04.21</small>
-  </div>
+    <div class="info">
+      <strong>{{post.author}}</strong>
+      <small>{{post.date | date: 'medium':null:'ru' }}</small>
+    </div>
 
-  <div>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid delectus deleniti dolor necessitatibus nostrum obcaecati odio vel. Ab alias animi architecto aspernatur autem delectus deleniti deserunt doloribus dolorum ducimus, eius enim eveniet expedita harum iure laudantium mollitia nesciunt nihil odit officiis, perferendis placeat quae quos, ratione repellendus saepe sed unde.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid delectus deleniti dolor necessitatibus nostrum obcaecati odio vel. Ab alias animi architecto aspernatur autem delectus deleniti deserunt doloribus dolorum ducimus, eius enim eveniet expedita harum iure laudantium mollitia nesciunt nihil odit officiis, perferendis placeat quae quos, ratione repellendus saepe sed unde.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid delectus deleniti dolor necessitatibus nostrum obcaecati odio vel. Ab alias animi architecto aspernatur autem delectus deleniti deserunt doloribus dolorum ducimus, eius enim eveniet expedita harum iure laudantium mollitia nesciunt nihil odit officiis, perferendis placeat quae quos, ratione repellendus saepe sed unde.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid delectus deleniti dolor necessitatibus nostrum obcaecati odio vel. Ab alias animi architecto aspernatur autem delectus deleniti deserunt doloribus dolorum ducimus, eius enim eveniet expedita harum iure laudantium mollitia nesciunt nihil odit officiis, perferendis placeat quae quos, ratione repellendus saepe sed unde.</p>
+    <div>
+      <quill-view-html [content]="post.text"></quill-view-html>
+    </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <p class="text-center">
+    loading post...
+  </p>
+</ng-template>
+
